@@ -185,4 +185,45 @@ GROUP BY Customers.ContactName;
 --43. Satýþý yapýlmayan ürünler listesi
 select ProductName from Products	where Discontinued=1 and UnitsInStock>0
 
+--44.Ortalama satýþ fiyatýndan ucuza satýlan ürünleri listele
+select * from Products
+select ProductName, UnitPrice from Products where UnitPrice < (select AVG(UnitPrice) from Products) 
+
+--45.Sipariþ vermeyen kullanýcýlar
+select * from Customers where CustomerID not in (select distinct CustomerID from Orders)
+
+--46.hangi ürün hangi kategoride
+select ProductName, CategoryName from Products P
+inner join Categories C on P.CategoryID=C.CategoryID
+group by ProductName, CategoryName
+
+--47.Nakliyecilerin listesi
+select CompanyName from Shippers
+
+--48.Hangi çalýþan hangi bölgeden?
+select * from Employees 
+select * from EmployeeTerritories
+
+--49.Hangi tedarikçi hangi ürünü saðlýyor?
+select CompanyName, ProductName  from Suppliers S
+inner join Products P on S.SupplierID=P.SupplierID 
+group by CompanyName, ProductName 
+
+--50.Beverages kategorisine ait ürünler
+select * from Products
+select * from Categories
+
+select ProductName, CategoryName from Products P
+inner join Categories C on P.CategoryID=C.CategoryID
+group by ProductName, CategoryName 
+having CategoryName='Beverages'
+
+--51 Michael ya da Laura ile hemþehri olan çalýþanlar?
+select * from Employees
+select FirstName, City from Employees where City in ('Seattle','London')
+
+
+
+
+
 
